@@ -6,6 +6,9 @@ import vn.vpm.deluxe.domain.User;
 import vn.vpm.deluxe.repository.RoleRepository;
 import vn.vpm.deluxe.repository.UserRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -23,5 +26,17 @@ public class UserService {
 
     public User handleSave(User user) {
         return this.userRepository.save(user);
+    }
+
+    public List<User> getAllUser() {
+        return this.userRepository.findAll();
+    }
+
+    public Optional<User> getUserById(long id) {
+        return this.userRepository.findById(id);
+    }
+
+    public User getDeleteUserById(long id) {
+        return this.userRepository.deleteById(id);
     }
 }

@@ -6,4 +6,5 @@ import vn.vpm.deluxe.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User deleteById(long id);
 }
