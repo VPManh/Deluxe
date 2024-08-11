@@ -16,15 +16,23 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public List<Room> getFindA6New(){
+    public void handleSaveRoom(Room room) {
+        roomRepository.save(room);
+    }
+
+    public void handleDeleteRoom(long id) {
+        this.roomRepository.deleteById(id);
+    }
+
+    public List<Room> getFindA6New() {
         return this.roomRepository.findTop6ByOrderByIdAsc();
     }
 
-    public List<Room> getFindAllRoom(){
+    public List<Room> getFindAllRoom() {
         return this.roomRepository.findAll();
     }
 
-    public Optional<Room> getRoomById(long id){
+    public Optional<Room> getRoomById(long id) {
         return this.roomRepository.findById(id);
     }
 }
