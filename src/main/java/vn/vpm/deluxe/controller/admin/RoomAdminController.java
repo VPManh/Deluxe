@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.vpm.deluxe.domain.Room;
+import vn.vpm.deluxe.domain.RoomImage;
 import vn.vpm.deluxe.service.RoomService;
 import vn.vpm.deluxe.service.UploadService;
 
@@ -46,18 +47,37 @@ public class RoomAdminController {
     }
 
     @PostMapping("/admin/room/create")
-    public String postCreateRoom(@ModelAttribute("newRoom") Room room, Model model,
+    public String postCreateRoom(@ModelAttribute("newRoom") Room room,
+                                 Model model,
                                  BindingResult bindingResult,
-                                 @RequestParam("hoidanitFile") MultipartFile file) {
+                                 @RequestParam("hoidanitFiles") MultipartFile[] files) {
+
         if (bindingResult.hasErrors()) {
             return "admin/room/create";
         }
 
-        String imageRoom = this.uploadService.handleSaveUploadFile(file, "rooms");
-        room.setImage(imageRoom);
-        this.roomService.handleSaveRoom(room);
+        // Nếu bạn vẫn muốn lưu 1 ảnh chính như trước đây:
+        if (files.length > 0) {
+            String mainImage = uploadService.handleSaveUploadFile(files[0], "rooms");
+            room.setImage(mainImage);
+
+        }
+
+        // Lưu các file còn lại vào imagesDetail
+        List<String> fileNames = uploadService.handleSaveUploadFiles(files, "rooms/" + room.getId());
+
+        List<RoomImage> imagesDetail = fileNames.stream()
+                .map(fileName -> new RoomImage(null, room, "/resources/admin/images/rooms/" + room.getId() + "/" + fileName))
+                .toList();
+
+        room.setImagesDetail(imagesDetail);
+
+        // Lưu thông tin phòng vào cơ sở dữ liệu
+        roomService.handleSaveRoom(room);
+
         return "redirect:/admin/room";
     }
+
 //   End Create Room
 
     //   Start Update Room

@@ -4,6 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +21,21 @@ public class UploadService {
         this.servletContext = servletContext;
     }
 
+    // Multiple Upload
+    public List<String> handleSaveUploadFiles(MultipartFile[] files, String targetFolder) {
+        List<String> fileNames = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                String finalName = handleSaveUploadFile(file, targetFolder);
+                fileNames.add(finalName);
+            }
+        }
+
+        return fileNames;
+    }
+
+    // Phương thức xử lý upload MÔT file
     public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
         if (file.isEmpty()) {
             return "";
@@ -40,10 +58,8 @@ public class UploadService {
             stream.write(bytes);
             stream.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return finalName;
-
     }
 }

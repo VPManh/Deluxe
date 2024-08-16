@@ -92,15 +92,19 @@
                                     <label class="form-label">Description:</label>
                                     <form:textarea class="form-control" path="description"></form:textarea>
                                 </div>
-                                <div class="mb-3 col-12 col-md-6">
-                                    <label for="avatarFile" class="form-label">Avatar:</label>
-                                    <input class="form-control" type="file" id="avatarFile"
-                                           accept=".png, .jpg, .jpeg" name="hoidanitFile" />
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <img style="max-height: 250px; display: none;" alt="avatar preview"
-                                         id="avatarPreview" />
-                                </div>
+<%--                                <div class="mb-3 col-12 col-md-6">--%>
+<%--                                    <label for="avatarFile" class="form-label">Avatar:</label>--%>
+<%--                                    <input class="form-control" type="file" id="avatarFile"--%>
+<%--                                           accept=".png, .jpg, .jpeg" name="hoidanitFile" />--%>
+<%--                                </div>--%>
+<%--                                <div class="col-12 mb-3">--%>
+<%--                                    <img style="max-height: 250px; display: none;" alt="avatar preview"--%>
+<%--                                         id="avatarPreview" />--%>
+<%--                                </div>--%>
+                            <div class="mb-3">
+                                <label for="hoidanitFiles">Upload Images:</label>
+                                <input type="file" name="hoidanitFiles" multiple="multiple"/>
+                            </div>
                                 <button type="submit" class="btn btn-primary">Create Room</button>
                             </form:form>
                         </div>
