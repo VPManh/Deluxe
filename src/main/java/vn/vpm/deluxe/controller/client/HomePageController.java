@@ -18,4 +18,9 @@ public class HomePageController {
         model.addAttribute("rooms",this.roomService.getFindA6New());
         return "client/room/show";
     }
+
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        return "client/auth/login";
+    }
 }
